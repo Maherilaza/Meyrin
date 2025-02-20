@@ -1,0 +1,10 @@
+{
+    "prog" : {
+        "name" : "meyrin",
+        "version" : 1.0,
+        "about" : ""
+    },
+    "author" : {
+        "name" : "maherilaza"
+    }
+}
