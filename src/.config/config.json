@@ -1,8 +1,8 @@
 {
     "prog" : {
         "name" : "meyrin",
-        "version" : 1.0,
-        "about" : ""
+        "version" : 0.1,
+        "about" : "An ultra-fast server made in rust"
     },
     "author" : {
         "name" : "maherilaza"
