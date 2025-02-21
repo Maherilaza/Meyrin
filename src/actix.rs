@@ -8,13 +8,16 @@ actix_handle!(index, "static/index.html");
 #[actix_web::main]
 pub async fn init_server() -> std::io::Result<()> {
     let (port, ip) = init_args();
+    env_logger::builder()
+        .filter(None, log::LevelFilter::Info)
+        .init();
 
     HttpServer::new(|| {
         App::new()
-            .default_service(web::route().to(not_found))
             .route("/", web::get().to(index))
             .service(Files::new("/static", "./static").index_file(include_str!(".config/404.html")))
             .route("/index", web::get().to(index))
+            .default_service(web::route().to(not_found))
     })
     .bind(format!("{}:{}", ip, port))?
     .run()
