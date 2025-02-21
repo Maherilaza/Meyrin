@@ -1,0 +1,14 @@
+[tasks.zigbuild]
+description = "Compile the project in release mode zigbuild"
+command = "cargo-zigbuild"
+args = ["build", "--release"]
+
+[tasks.compress]
+description = "Compress executable with UPX"
+script = '''
+upx --best --lzma target/release/meyrin
+'''
+
+[tasks.full-build]
+description = "Compiles and compresses the executable"
+dependencies = ["zigbuild", "compress"]
