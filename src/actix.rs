@@ -1,8 +1,9 @@
-use actix_files::Files;
+use crate::{activate_404_handler, actix_handle, data::init_args};
+// use actix_files::Files;
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
-use crate::{actix_handle, data::init_args};
 
-actix_handle!(index, "index.html");
+activate_404_handler!();
+actix_handle!(index, "static/index.html");
 
 #[actix_web::main]
 pub async fn init_server() -> std::io::Result<()> {
@@ -10,11 +11,12 @@ pub async fn init_server() -> std::io::Result<()> {
 
     HttpServer::new(|| {
         App::new()
-            .service(web::scope("/").route("", web::get().to(index)))
-            .route("/index.html", web::get().to(index))
-            .service(Files::new("/", "app").show_files_listing())
+            .default_service(web::route().to(not_found))
+            .route("/", web::get().to(index))
+            //.service(Files::new("/", "static").show_files_listing())
+            .route("/index", web::get().to(index))
     })
-    .bind((ip, port))?
+    .bind(format!("{}:{}", ip, port))?
     .run()
     .await
 }

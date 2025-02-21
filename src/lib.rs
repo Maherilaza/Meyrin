@@ -30,3 +30,14 @@ macro_rules! actix_handle {
         }
     };
 }
+
+#[macro_export]
+macro_rules! activate_404_handler {
+    () => {
+        async fn not_found() -> impl Responder {
+            HttpResponse::NotFound()
+                .content_type("text/html; charset=utf-8")
+                .body(include_str!(".config/404.html"))
+        }
+    };
+}

@@ -1,7 +1,7 @@
 [tasks.zigbuild]
 description = "Compile the project in release mode zigbuild"
 command = "cargo-zigbuild"
-args = ["build", "--release"]
+args = ["run", "--release"]
 
 [tasks.compress]
 description = "Compress executable with UPX"
