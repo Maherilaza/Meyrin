@@ -29,7 +29,7 @@ pub fn init_args() -> (u16, String) {
     crate::ascii_init();
     let json_data = include_str!(".config/config.json");
     let data: Merge = serde_json::from_str(json_data).expect("Invalid JSON format");
-    let mut new_app = clap::Command::new(data.prog.name)
+    let new_app = clap::Command::new(data.prog.name)
         .about(data.prog.about)
         .author(data.author.name)
         .version(format!("{:.1}", data.prog.version))
@@ -39,8 +39,8 @@ pub fn init_args() -> (u16, String) {
                 .long("port")
                 .help("set port number")
                 .value_parser(value_parser!(u16))
-                //.default_value("5000")
-                .required(true),
+                .default_value("5000")
+                .required(false),
         )
         .arg(
             Arg::new("ip")
@@ -50,11 +50,6 @@ pub fn init_args() -> (u16, String) {
                 .value_parser(value_parser!(String))
                 .default_value("127.0.0.1"),
         );
-
-    if std::env::args().len() == 1 {
-        let _ = new_app.print_help();
-        std::process::exit(-1);
-    }
 
     let matches = new_app.get_matches();
     let port = *matches.get_one::<u16>("port").unwrap();

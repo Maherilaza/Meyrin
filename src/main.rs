@@ -1,4 +1,3 @@
-use meyrin::data::init_args;
 fn main() {
-    init_args();
+    let _start_server = meyrin::actix::init_server();
 }
