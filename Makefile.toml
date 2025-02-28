@@ -2,20 +2,17 @@
 command = "cargo-zigbuild"
 args = ["build", "--release"]
 
-[tasks.compress]
-script = '''
-upx --best --lzma target/release/meyrin
-'''
+# [tasks.compress]
+# script = '''
+# upx --best --lzma target/release/meyrin
+# '''
 
 [tasks.normal]
 command = "cargo"
 args = ["build", "--release"]
 
-[tasks.run]
-command = "./target/release/meyrin"
-
-[tasks.full-build]
-dependencies = ["zigbuild", "compress", "run"]
+[tasks.optimize]
+dependencies = ["zigbuild"]
 
 [tasks.build]
 dependencies = ["normal"]
