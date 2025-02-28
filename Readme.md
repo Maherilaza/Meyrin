@@ -56,3 +56,5 @@ cargo make build
 ```shell
 cargo make optimize
 ```
+## DOCS
+For large-scale and production projects, I recommend using Artix directly. You can consult the documentation here [[https://actix.rs/docs/]](https://actix.rs/docs/)
