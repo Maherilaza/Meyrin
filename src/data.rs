@@ -1,7 +1,7 @@
 use clap::{value_parser, Arg};
 use colored::*;
 use serde::{Deserialize, Serialize};
-use std::net::IpAddr;
+use std::{fs, io::Write, net::IpAddr};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Prog {
@@ -27,6 +27,7 @@ fn is_valid_ip(ip: &str) -> bool {
 
 pub fn init_args() -> (u16, String) {
     crate::ascii_init();
+    let _ = check_folder_handler();
     let json_data = include_str!(".config/config.json");
     let data: Merge = serde_json::from_str(json_data).expect("Invalid JSON format");
     let new_app = clap::Command::new(data.prog.name)
@@ -65,4 +66,27 @@ pub fn init_args() -> (u16, String) {
         std::process::exit(-1);
     }
     (port, ip.clone())
+}
+
+fn check_folder_handler() -> Result<(), Box<dyn std::error::Error>> {
+    let folder_name = crate::FOLDER_HANDLER;
+    if !std::path::Path::new(folder_name).is_dir() {
+        let index = include_str!("../static/index.html");
+        let css = include_str!("../static/style.css");
+
+        std::fs::DirBuilder::new()
+            .create(folder_name).expect("An error occurred while trying to create the source folder");
+
+        let mut file_index = fs::File::create(format!("{}/index.html", folder_name)).expect("An error occurred while trying to create index file");
+        file_index
+            .write(&index.as_bytes())
+            .expect("An error occurred while trying to write file");
+
+        let mut style_css = fs::File::create(format!("{}/style.css", folder_name))
+            .expect("An error occurred while trying to create index file");
+        style_css
+            .write(&css.as_bytes())
+            .expect("An error occurred while trying to write file");
+    }
+    Ok(())
 }

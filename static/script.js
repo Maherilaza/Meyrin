@@ -1,1 +1,3 @@
-console.log("Hello World")
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("Page loaded successfully.");
+});

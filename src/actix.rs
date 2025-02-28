@@ -3,7 +3,7 @@ use actix_files::Files;
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 
 activate_404_handler!();
-actix_handle!(index, "static/index.html");
+actix_handle!(index, "index.html");
 
 #[actix_web::main]
 pub async fn init_server() -> std::io::Result<()> {
@@ -15,7 +15,10 @@ pub async fn init_server() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .route("/", web::get().to(index))
-            .service(Files::new("/static", "./static").index_file(include_str!(".config/404.html")))
+            .service(
+                Files::new(&crate::FOLDER_HANDLER, &crate::FOLDER_HANDLER)
+                    .index_file(include_str!(".config/404.html")),
+            )
             .route("/index", web::get().to(index))
             .default_service(web::route().to(not_found))
     })
