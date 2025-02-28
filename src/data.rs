@@ -75,9 +75,11 @@ fn check_folder_handler() -> Result<(), Box<dyn std::error::Error>> {
         let css = include_str!("../static/style.css");
 
         std::fs::DirBuilder::new()
-            .create(folder_name).expect("An error occurred while trying to create the source folder");
+            .create(folder_name)
+            .expect("An error occurred while trying to create the source folder");
 
-        let mut file_index = fs::File::create(format!("{}/index.html", folder_name)).expect("An error occurred while trying to create index file");
+        let mut file_index = fs::File::create(format!("{}/index.html", folder_name))
+            .expect("An error occurred while trying to create index file");
         file_index
             .write(&index.as_bytes())
             .expect("An error occurred while trying to write file");

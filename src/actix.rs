@@ -6,6 +6,7 @@ activate_404_handler!();
 actix_handle!(index, "index.html");
 
 #[actix_web::main]
+/// An example of implementation with static files
 pub async fn init_server() -> std::io::Result<()> {
     let (port, ip) = init_args();
     env_logger::builder()
@@ -22,7 +23,11 @@ pub async fn init_server() -> std::io::Result<()> {
             .route("/index", web::get().to(index))
             .default_service(web::route().to(not_found))
     })
-    .bind(format!("{}:{}", ip, port))?
+    .bind(format!("{}:{}", ip, port))
+    .unwrap_or_else(|e| {
+        eprintln!("{}", e);
+        std::process::exit(-1)
+    })
     .run()
     .await
 }

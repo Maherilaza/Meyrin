@@ -1,10 +1,10 @@
 {
     "prog" : {
-        "name" : "meyrin",
+        "name" : "Meyrin",
         "version" : 0.1,
-        "about" : "An ultra-fast server made in rust"
+        "about" : "An example of a simple, ready-to-use web server implementing actix "
     },
     "author" : {
-        "name" : "maherilaza"
+        "name" : "Maheriaza"
     }
 }

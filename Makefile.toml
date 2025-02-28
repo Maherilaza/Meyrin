@@ -7,8 +7,15 @@ script = '''
 upx --best --lzma target/release/meyrin
 '''
 
+[tasks.normal]
+command = "cargo"
+args = ["build", "--release"]
+
 [tasks.run]
 command = "./target/release/meyrin"
 
 [tasks.full-build]
 dependencies = ["zigbuild", "compress", "run"]
+
+[tasks.build]
+dependencies = ["normal"]
