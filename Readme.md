@@ -46,11 +46,6 @@ cargo instal cargo-make
 cargo install --locked cargo-zigbuild
 ```
 [![asciicast](https://asciinema.org/a/a147ZvBMOQptYUqiAP2b8zmdx.svg)](https://asciinema.org/a/a147ZvBMOQptYUqiAP2b8zmdx)
-
-#### NORMAL BUILD 
-```bash
-cargo make build
-```
 #### USING ZIGBUILD 
 ```shell
 cargo make optimize
