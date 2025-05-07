@@ -45,7 +45,6 @@ meyrin -p, --port <port> -i, --ip <ip address> -V, --Version <Print version>
 cargo instal cargo-make
 cargo install --locked cargo-zigbuild
 ```
-[![asciicast](https://asciinema.org/a/a147ZvBMOQptYUqiAP2b8zmdx.svg)](https://asciinema.org/a/a147ZvBMOQptYUqiAP2b8zmdx)
 #### USING ZIGBUILD 
 ```shell
 cargo make optimize
