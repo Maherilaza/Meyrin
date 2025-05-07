@@ -1,0 +1,43 @@
+name: Auto upgrade Rust deps
+
+on:
+  schedule:
+    - cron: '0 5 * * 1'  # Tous les lundis à 5h UTC
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install tools
+        run: |
+          cargo install cargo-outdated
+          cargo install cargo-edit
+
+      - name: Check outdated
+        run: |
+          cargo outdated --exit-code 1 || echo "No updates"
+
+      - name: Upgrade if needed
+        run: |
+          cargo upgrade
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git checkout -b auto/upgrade-deps
+          git add Cargo.toml Cargo.lock
+          git commit -m "chore: upgrade Rust dependencies"
+          git push origin auto/upgrade-deps
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: auto/upgrade-deps
+          title: "chore: upgrade Rust dependencies"
+          body: "Automated upgrade via cargo-upgrade."

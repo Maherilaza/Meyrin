@@ -1,0 +1,7 @@
+version: 2
+updates:
+  - package-ecosystem: "cargo"
+    directory: "/"             # Chemin vers le Cargo.toml
+    schedule:
+      interval: "daily"       # "daily", "weekly", ou "monthly"
+    open-pull-requests-limit: 5
