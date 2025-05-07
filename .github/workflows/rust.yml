@@ -1,0 +1,25 @@
+name: Build on dependabot PR
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
+
+jobs:
+  build:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Build project
+        run: cargo build --verbose
